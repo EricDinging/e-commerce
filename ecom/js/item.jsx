@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 
-export default function Item({ url }) {
+export default function Item({ url, addToCart}) {
   /* Display image and post owner of a single post */
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
+  const [id, setId] = useState(0);
 
   useEffect(() => {
     // Declare a boolean flag that we can use to cancel the API request.
@@ -25,6 +25,7 @@ export default function Item({ url }) {
           setName(data.name);
           setDescription(data.description);
           setPrice(data.price);
+          setId(data.id);
         }
       })
       .catch((error) => console.log(error));
@@ -41,6 +42,7 @@ export default function Item({ url }) {
   return (
     <div className="item">
       <p>{ name }: {description}, ${price}</p>
+      <button onClick={() => addToCart({id: id, name: name})}>Add to Cart</button>
     </div>
   );
 }

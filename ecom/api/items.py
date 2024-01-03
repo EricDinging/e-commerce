@@ -8,8 +8,15 @@ import ecom
 @ecom.app.route("/api/v1/item", methods=["GET"])
 def get_items():
     """Return items."""
+    results = []
 
-    context = {"name": "item1", "description": "item1 description", "price": 0}
+    # hardcode 10 items
+    for i in range(10):
+        results.append({
+            "id": i,
+            "url": str(pathlib.Path(flask.request.path) / str(i))
+        })
+    context = {"results": results}
     return flask.jsonify(**context)
 
 
@@ -17,5 +24,10 @@ def get_items():
 def get_item(itemid_url_slug):
     """Return items."""
 
-    context = {"name": "item1", "description": "item1 description", "price": 0}
+    context = {
+        "id": itemid_url_slug,
+        "name": f"item{itemid_url_slug}", 
+        "description": f"item{itemid_url_slug} description", 
+        "price": int(itemid_url_slug) * 10 + 10
+    }
     return flask.jsonify(**context)

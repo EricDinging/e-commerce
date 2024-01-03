@@ -25,3 +25,10 @@ sudo apt update
 sudo apt install nodejs -y
 npm ci .
 ```
+
+## API
+| HTTP method | URL | Description |
+|----------|----------|----------|
+| GET | /api/v1/item/ | Return all available items |
+| GET | /api/v1/item/<id>/ | Return item <id> |
+| Row 3, Cell 1 | Row 3, Cell 2 | Row 3, Cell 3 |

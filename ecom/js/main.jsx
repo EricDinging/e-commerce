@@ -1,14 +1,17 @@
-import React, { StrictMode } from "react";
+import React, { useState, useEffect, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import Item from "./item";
+import Items from "./items";
 
 // Create a root
 const root = createRoot(document.getElementById("reactEntry"));
 
 // This method is only called once
 // Insert the post component into the DOM
+
+
+
 root.render(
   <StrictMode>
-    <Item url="/api/v1/item/1" />
+    <Items url="/api/v1/item"/>
   </StrictMode>
 );
