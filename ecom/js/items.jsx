@@ -8,29 +8,61 @@ export default function Items({ url }) {
 
     // cart items
     const [cartItems, setCartItems ] = useState([]);
+
+    const submitUpdate = (itemid, quantity) => {
+        const url = '/api/v1/cart/update/';
+        const updates = {"itemid": itemid, "quantity": quantity}
+
+        fetch(url, {
+            method: 'POST', // Using POST for updating quantity
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: JSON.stringify(updates),
+            credentials: "same-origin",
+        })
+        .then((response) => {
+            if (!response.ok) throw Error(response.statusText);
+            return response.json();
+        })
+        
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+    
     const updateQuantity = (id, newQuantity) => {
-    const updatedCartItems = cartItems.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-    );
-    setCartItems(updatedCartItems);
+        const updatedCartItems = cartItems.map(item =>
+            item.id === id ? { ...item, quantity: newQuantity } : item
+        );
+        setCartItems(updatedCartItems);
+        submitUpdate(id, newQuantity);
     };
     const removeFromCart = (id) => {
         const updatedCartItems = cartItems.filter(item => item.id !== id);
         setCartItems(updatedCartItems);
+        submitUpdate(id, 0);
     };
 
     const addToCart = (product) => {
         const existingItem = cartItems.find(item => item.id === product.id);
 
         if (existingItem) {
-        const updatedCartItems = cartItems.map(item =>
-            item.id === existingItem.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-        setCartItems(updatedCartItems);
+            const updatedCartItems = cartItems.map(
+                (item) => {
+                    if (item.id === existingItem.id) {
+                        submitUpdate(item.id, item.quantity + 1);
+                        return { ...item, quantity: item.quantity + 1 };
+                    } else {
+                        return item;
+                    }
+                }
+            );
+            setCartItems(updatedCartItems);
         } else {
-        setCartItems([...cartItems, { id: product.id, name: product.name, quantity: 1 }]);
+            setCartItems([...cartItems, { id: product.id, name: product.name, quantity: 1 }]);
+            submitUpdate(product.id, 1);
         }
     };
     useEffect(() => {

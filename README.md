@@ -31,4 +31,4 @@ npm ci .
 |----------|----------|----------|
 | GET | /api/v1/item/ | Return all available items |
 | GET | /api/v1/item/<id>/ | Return item <id> |
-| Row 3, Cell 1 | Row 3, Cell 2 | Row 3, Cell 3 |
+| POST | /api/v1/cart/update | Update cart item |
