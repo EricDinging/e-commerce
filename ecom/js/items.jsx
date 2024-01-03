@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import Item from "./item";
 import Cart from "./cart";
+import Checkout from "./checkout";
 
 export default function Items({ url }) {
     const [items, setItems] = useState([]);
@@ -105,8 +106,9 @@ export default function Items({ url }) {
         <Cart 
             cartItems={cartItems}
             updateQuantity={updateQuantity}
-            removeFromCart={removeFromCart}
+            setCartItems={setCartItems}
         />
+        <Checkout/>
         </div>
     );
 }
